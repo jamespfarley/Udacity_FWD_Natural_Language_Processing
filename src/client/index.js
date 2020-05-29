@@ -1,5 +1,6 @@
 import { handleSubmit } from './js/formHandler'
-//import { functionName } from './js/filename'
+import { postData } from './js/formHandler'
+import { getCountryOrigin } from './js/langOrigin'
 
 import './styles/resets.scss'
 import './styles/base.scss'
@@ -12,5 +13,6 @@ alert("this is index.js")
 
 export {
     handleSubmit
-    //,functionName
+    ,postData
+    ,getCountryOrigin
 }

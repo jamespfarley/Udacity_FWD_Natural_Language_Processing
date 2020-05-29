@@ -21,15 +21,9 @@ app.use(bodyParser.json());
 const cors = require('cors');
 app.use(cors());
 
-var aylien = require("aylien_textapi");
+const path = require('path');
 
-// Set aylien API credentials
-const aylienApi = new aylien(
-    {
-        application_id: process.env.API_ID,
-        application_key: process.env.API_KEY
-    }
-);
+var aylien = require("aylien_textapi");
 
 // Initialize project root folder
 app.use(express.static('dist'));
@@ -62,24 +56,30 @@ app.get('/test', (req, res) => {
 // Callback function to complete GET
 app.get('/nlp', (req, res) => {
 
-    console.log('... app.get : req.body = ' + JSON.stringify(req.body));
-
-    res.send(nlpData);
+    res.sendFile(path.join(__dirname + "../../../dist/index.html"));
 });
 
 // Post Route
 app.post('/nlp', detectLanguage);
+
+// Set aylien API credentials
+const aylienApi = new aylien(
+    {
+        application_id: process.env.API_ID,
+        application_key: process.env.API_KEY
+    }
+);
 
 function detectLanguage(req, res){
     // !!!
     console.log('... app.post() :: addInfo : req.body = ' + JSON.stringify(req.body));
 
     aylienApi.language({
-        text: req.body
-    }, function(error, res) {
+        text: req.body.userInput
+    }, function(error, response) {
         if (error === null) {
-            console.log(res);
-            Object.assign(nlpData, res.body);
+            console.log("Aylien response : " + JSON.stringify(response));
+            Object.assign(nlpData, response);
         
             // !!!
             console.log('... app.post() :: addInfo : nlpData = ' + JSON.stringify(nlpData));

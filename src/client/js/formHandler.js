@@ -3,15 +3,21 @@
 function handleSubmit(event){
     event.preventDefault();
 
-    const userInput = document.getElementById('name').innerHTML;
+    const inputValue = document.getElementById('name').value;
+ 
+    const nlpURLLocal = 'http://localhost:8081/nlp';
+    let reqBody = { 
+        userInput : inputValue 
+    };
 
-    getPhraseOrigin(userInput);
+    getPhraseOrigin(nlpURLLocal, reqBody);
+
 }
 
-function getPhraseOrigin(userInput){
+function getPhraseOrigin(url, userInput){
 
-    postData('http://localhost:8081/nlp', {"userInput" : userInput})
-    .then(() => updateUI())
+    postData(url, userInput)
+    .then((retData)=> updateUI(retData))
     .catch((error) => {console.error(`getPhraseOrigin() chained promises :: error: ${error}`)});
 }
 
@@ -26,13 +32,10 @@ const postData = async (url, data) => {
                                 }).catch( 
                                     error => { console.log(`postData() fetch() error: ${error}`)}
                                 );
-
-    try{
+   try{
         const newData = await response.json();
-
         // !!!
         console.log('... app.js : postData() :: newData = ' + JSON.stringify(newData));
-
         return newData;
 
     } catch(error){
@@ -40,19 +43,19 @@ const postData = async (url, data) => {
     } 
 }
 
-// GET project data
-const updateUI = async () => {
-
-    const request = await fetch('http://localhost:8081/nlp').catch( error => { console.log(`updateUI fetch() error: ${error}`)});
+// Update view
+const updateUI = async (originData) => {
 
     try{
-        const data = await request.json();
+        // !!!
+        console.log("updateUI : data object :: " + JSON.stringify(originData));
 
-        document.getElementById('results').innerHTML = data.lang;
+        const country = Client.getCountryOrigin(originData.lang);
+        document.getElementById('results').innerHTML = country;
 
     } catch(error) {
         console.error(`Error in updateUI() : ${error}`);
     }
 }
 
-export { handleSubmit}
+export { handleSubmit, postData}
