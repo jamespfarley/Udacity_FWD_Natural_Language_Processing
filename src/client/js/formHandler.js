@@ -1,4 +1,7 @@
 
+// https://www.npmjs.com/package/node-fetch
+// a window.fetch compatible API on Node.js runtime
+const fetch = require("node-fetch");
 
 function handleSubmit(event){
     event.preventDefault();
@@ -35,7 +38,7 @@ const postData = async (url, data) => {
    try{
         const newData = await response.json();
         // !!!
-        console.log('... app.js : postData() :: newData = ' + JSON.stringify(newData));
+        console.log('... formHandler.js : postData() :: newData = ' + JSON.stringify(newData));
         return newData;
 
     } catch(error){

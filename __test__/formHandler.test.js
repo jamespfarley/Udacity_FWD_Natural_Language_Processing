@@ -3,6 +3,6 @@ const nlpURLLocal = 'http://localhost:8081/nlp';
 
 
 test('formHandler.postData test', async () => {
-    const data = await formHandler.postData(nlpURLLocal, {"userInput" : "I play guitar in a band"});
+    const data = await formHandler.postData(nlpURLLocal, {"userInput" : "I play lead guitar in a rock band"});
     expect(data.lang).toBe('en');
   });

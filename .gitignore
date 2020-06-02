@@ -3,3 +3,4 @@ dist
 .env
 sum.js
 sum.test.js
+index_bk.js

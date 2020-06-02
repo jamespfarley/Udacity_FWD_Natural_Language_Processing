@@ -29,18 +29,18 @@ var aylien = require("aylien_textapi");
 app.use(express.static('dist'));
 console.log('Current directory : ' + __dirname);
 
-// SERVER
-//Server port
-const port = 8081;
+// // SERVER
+// //Server port
+// const port = 8081;
 
-// Create server  app.listen(<port-number>, <callback function>)
-const server = app.listen(port, listening);
+// // Create server  app.listen(<port-number>, <callback function>)
+// const server = app.listen(port, listening);
 
-// Callback to debug
-function listening(){
-  console.log('... server is running');
-  console.log(`... running on location ${port}`);
-}
+// // Callback to debug
+// function listening(){
+//   console.log('... server is running');
+//   console.log(`... running on location ${port}`);
+// }
 
 // Setup empty JS object to act as endpoint for all routes
 const nlpData = {};
@@ -71,20 +71,15 @@ const aylienApi = new aylien(
 );
 
 function detectLanguage(req, res){
-    // !!!
-    console.log('... app.post() :: addInfo : req.body = ' + JSON.stringify(req.body));
-
     aylienApi.language({
         text: req.body.userInput
     }, function(error, response) {
         if (error === null) {
             console.log("Aylien response : " + JSON.stringify(response));
             Object.assign(nlpData, response);
-        
-            // !!!
-            console.log('... app.post() :: addInfo : nlpData = ' + JSON.stringify(nlpData));
-
             res.send(nlpData);
         }
     });
 }
+
+module.exports = app;
