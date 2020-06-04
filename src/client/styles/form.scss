@@ -11,3 +11,15 @@ input {
     line-height: 16px;
     margin: 10px 0;
 }
+
+input:invalid:required {
+    border: 2px solid red;
+}
+
+input:valid {
+    border: 1px solid black;
+}
+
+#errMsg{
+    color: red;
+}

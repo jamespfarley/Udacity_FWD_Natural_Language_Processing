@@ -27,7 +27,7 @@ var aylien = require("aylien_textapi");
 
 // Initialize project root folder
 app.use(express.static('dist'));
-console.log('Current directory : ' + __dirname);
+//console.log('Current directory : ' + __dirname);
 
 // // SERVER
 // //Server port

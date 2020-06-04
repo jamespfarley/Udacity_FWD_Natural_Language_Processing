@@ -2,37 +2,52 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title>Test</title>
--    </head>
+        <title>Text Analysis</title>
+        <style>
+        </style>
+    </head>
 
     <body>
 
         <header>
             <div class="">
-                Logo
-            </div>
-            <div class="">
-                navigation
+                Language Origin
             </div>
         </header>
 
         <main>
             <section>
+                <div id=rules>
+                    <p>What language uses these characters "今日は元気ですか？" </p>
+                    <p>Or speaks these words, "Fe ddewch o hyd i mi yn y dafarn!"</p>
+                    <p>Enter a phrase in any language to learn its origin. ( The longer the phrase, the more accurate the result will be)</p>
+                </div>
+            </section>
+            <section>
                 <form class="" onsubmit="return Client.handleSubmit(event)">
-                    <input id="name" type="text" name="input" value="" placeholder="Ex. I play guitar in a band">
+                    <span id="errMsg"></span>
+                    <input id="phrase" type="text" name="input" value="" placeholder="Ex. I live at 221B Baker Street, London, England, United Kindom">
                     <input type="submit" name="" value="submit" onclick="return Client. handleSubmit(event)" onsubmit="return Client.handleSubmit(event)">
                 </form>
             <section>
 
-            <section>
-                <strong>Form Results:</strong>
+            <section id="container">
+                <strong>Origin:</strong>
                 <div id="results"></div>
+                <strong>Confidence:</strong>
+                <div id="confidence"></div>
             </section>
         </main>
 
-        <footer>
-            <p>This is a footer</p>
-        </footer>
-
+        <footer></footer>
+        <script>
+            // Check that service workers are supported
+            if ('serviceWorker' in navigator) {
+              // Use the window load event to keep the page load performant
+              window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js');
+              });
+            }
+        </script>
     </body>
 </html>

@@ -6,14 +6,29 @@ const fetch = require("node-fetch");
 function handleSubmit(event){
     event.preventDefault();
 
-    const inputValue = document.getElementById('name').value;
+    const inputValue = document.getElementById('phrase').value;
  
     const nlpURLLocal = 'http://localhost:8081/nlp';
     let reqBody = { 
         userInput : inputValue 
     };
 
-    getPhraseOrigin(nlpURLLocal, reqBody);
+    const regex = new RegExp('https?|www|com|org|net', 'g');
+    let isURL = regex.test(inputValue);
+
+
+    if ( isNaN(inputValue) && !isURL ){
+
+        getPhraseOrigin(nlpURLLocal, reqBody);
+        document.getElementById("errMsg").innerHTML = "";
+
+    } else {
+
+        document.getElementById("errMsg").innerHTML = "Please enter a valid text phrase";
+        document.getElementById('results').innerHTML = "";
+        document.getElementById('confidence').innerHTML = "";        
+        return;        
+    }
 
 }
 
@@ -38,7 +53,7 @@ const postData = async (url, data) => {
    try{
         const newData = await response.json();
         // !!!
-        console.log('... formHandler.js : postData() :: newData = ' + JSON.stringify(newData));
+        //console.log('... formHandler.js : postData() :: newData = ' + JSON.stringify(newData));
         return newData;
 
     } catch(error){
@@ -54,7 +69,9 @@ const updateUI = async (originData) => {
         console.log("updateUI : data object :: " + JSON.stringify(originData));
 
         const country = Client.getCountryOrigin(originData.lang);
+        const confidence = (originData.confidence * 100).toString().substring(0,4) + "%";
         document.getElementById('results').innerHTML = country;
+        document.getElementById('confidence').innerHTML = confidence;
 
     } catch(error) {
         console.error(`Error in updateUI() : ${error}`);

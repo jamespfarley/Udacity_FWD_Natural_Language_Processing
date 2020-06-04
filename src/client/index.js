@@ -8,9 +8,6 @@ import './styles/footer.scss'
 import './styles/form.scss'
 import './styles/header.scss'
 
-
-alert("this is index.js")
-
 export {
     handleSubmit
     ,postData
